@@ -37,19 +37,38 @@ class MainController extends Controller
         '𝕒'
     );
 
+    private $type_list_num = array(
+        '𝟎',
+        '𝟘',
+        '𝟢',
+        '𝟬',
+        '𝟶'
+    );
 
-    public function main()
+
+    public function main(Request $request)
     {
-        return view('main');
+        $text = $request->target;
+        $target = $text;
+        $result = "";
+        for ($i = 0; $i < mb_strlen($target); $i++) {
+            $tmp = mb_substr($target, $i);
+            $tmp = $this->to_normal($tmp);
+            $result .= $tmp;
+        }
+
+        return view("main", [
+            "text" => $text,
+            "result" => $result
+        ]);
     }
 
-
-    public function check_and_change($char, $type, $normal)
+    public function check_and_change($char, $type, $normal, $num)
     {
         $target_ord = mb_ord($char);
         $type_ord = mb_ord($type);
         $normal_ord = mb_ord($normal);
-        if ($type_ord <= $target_ord and $target_ord <= $type_ord + 25) {
+        if ($type_ord <= $target_ord and $target_ord <= $type_ord + $num - 1) {
             $target_ord = $normal_ord + $target_ord - $type_ord;
         }
 
@@ -59,30 +78,18 @@ class MainController extends Controller
     public function to_normal($char)
     {
         foreach ($this->type_list_A as $A) {
-            $char = $this->check_and_change($char, $A, 'A');
+            $char = $this->check_and_change($char, $A, 'A', 26);
         }
 
         foreach ($this->type_list_a as $a) {
-            $char = $this->check_and_change($char, $a, 'a');
+            $char = $this->check_and_change($char, $a, 'a', 26);
+        }
+
+        foreach ($this->type_list_num as $n) {
+            $char = $this->check_and_change($char, $n, '0', 10);
         }
 
 
         return $char;
-    }
-
-    public function change(Request $request)
-    {
-        $target = $request->target;
-
-        $result = "";
-        for ($i = 0; $i < mb_strlen($target); $i++) {
-            $tmp = mb_substr($target, $i);
-            $tmp = $this->to_normal($tmp);
-            $result .= $tmp;
-        }
-
-        return view("changed", [
-            "result" => $result
-        ]);
     }
 }
