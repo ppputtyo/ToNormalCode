@@ -49,6 +49,12 @@ class ToNormalController extends Controller
 
     public function to_normal_code(Request $request)
     {
+        if (!$request->has("change") and !$request->has("translate")) {
+            return view("to_normal", [
+                "text" => "",
+                "result" => ""
+            ]);
+        }
         $text = $request->target;
         $target = $text;
         $result = "";
@@ -70,10 +76,15 @@ class ToNormalController extends Controller
             $result .= $tmp;
         }
 
-        return view("to_normal", [
-            "text" => $text,
-            "result" => $result
-        ]);
+        if ($request->has("change")) {
+            return view("to_normal", [
+                "text" => $text,
+                "result" => $result
+            ]);
+        } else {
+            $url = "https://www.deepl.com/ja/translator#en/ja/" . rawurlencode($result);
+            return redirect($url);
+        }
     }
 
     public function check_and_change($char, $type, $normal, $num)
