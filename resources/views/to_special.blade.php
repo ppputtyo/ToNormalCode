@@ -28,4 +28,8 @@ Hello World → 𝓗𝓮𝓵𝓵𝓸 𝓦𝓸𝓻𝓵𝓭 みたいな変換が�
     <br>
 </form>
 
-<a href="/to-normal-code">DeepL用英字論文フォーマッタ<a>
+<a href="/to-normal-code">英字論文フォーマッタ</a>
+<br>
+<br>
+<a href="https://twitter.com/p_kyopro">作者Twitter</a>
+<br>
