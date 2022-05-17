@@ -10,7 +10,7 @@
     <li>ワンクリックでフォーマットしたものを DeepL で翻訳</li>
 </ul>
 
-<form method="POST" action="/to-normal-code" target="_blank">
+<form method="POST" action="/to-normal-code">
     @csrf
     <br>
     <textarea name="target" rows=30, cols="70" placeholder="変換前">{{$text}}</textarea>
