@@ -8,7 +8,7 @@ https://to-normal-code.herokuapp.com/
 -   数学用英数字記号 → 普通の英数字 (例: 𝔸→A)
 -   /n(改行)→ 半角スペース
 -   -/n の削除 (例: imple-/nment→implement)
--   ワンクリックで変換したものを DeepL で翻訳
+-   ワンクリックでフォーマットしたものを DeepL で翻訳
 
 <hr>
 
