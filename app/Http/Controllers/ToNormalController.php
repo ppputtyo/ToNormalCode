@@ -49,8 +49,8 @@ class ToNormalController extends Controller
 
     public function to_normal_code(Request $request)
     {
-        if (!$request->has("change") and !$request->has("translate")) {
-            return view("to_normal", [
+        if ((!$request->has("change") and !$request->has("translate")) or $request->has("reset")) {
+            return view("mypages.to_normal", [
                 "text" => "",
                 "result" => ""
             ]);
@@ -77,7 +77,7 @@ class ToNormalController extends Controller
         }
 
         if ($request->has("change")) {
-            return view("to_normal", [
+            return view("mypages.to_normal", [
                 "text" => $text,
                 "result" => $result
             ]);

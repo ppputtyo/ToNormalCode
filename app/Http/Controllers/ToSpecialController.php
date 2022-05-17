@@ -60,7 +60,7 @@ class ToSpecialController extends Controller
             $result .= $tmp;
         }
 
-        return view("to_special", [
+        return view("mypages.to_special", [
             "code" => $code,
             "text" => $text,
             "result" => $result
