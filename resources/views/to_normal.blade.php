@@ -1,11 +1,13 @@
 <h2>英字論文フォーマッタ</h2>
 <br>
-英字論文をそのままコピペしてDeepLに突っ込むと正しく翻訳されなくてイライラしてたので自分用に作りました。<br>
-現状の機能は以下の通り。<br>
+英字論文を DeepL で正しく翻訳されるようにフォーマットするツールです。
+<br>
+現在機能は以下の通り。
 <ul>
     <li>数学用英数字記号→普通の英数字 (例: 𝔸→A)</li>
     <li>/n(改行)→半角スペース</li>
     <li>-/nの削除 (例: imple-/nment→implement)</li>
+    <li>ワンクリックでフォーマットしたものを DeepL で翻訳</li>
 </ul>
 
 <form method="POST" action="/to-normal-code" target="_blank">
