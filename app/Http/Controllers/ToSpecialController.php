@@ -51,21 +51,24 @@ class ToSpecialController extends Controller
     {
         $text = $request->target;
         $target = $text;
+        $code = $request->code;
         $result = "";
+
         for ($i = 0; $i < mb_strlen($target); $i++) {
-            $tmp = mb_substr($target, $i);
-            $tmp = $this->to_special($tmp);
+            $tmp = mb_substr($target, $i, 1);
+            $tmp = $this->to_special($tmp, $code);
             $result .= $tmp;
         }
 
         return view("to_special", [
+            "code" => $code,
             "text" => $text,
             "result" => $result
         ]);
     }
 
 
-    public function to_special($char)
+    public function to_special($char, $code)
     {
         $ord_A = mb_ord('A');
         $ord_a = mb_ord('a');
@@ -73,7 +76,9 @@ class ToSpecialController extends Controller
         $target_ord = mb_ord($char);
 
         if ($ord_A <= $target_ord and $target_ord <= $ord_A + 25) {
-            $target_ord += mb_ord($this->type_list_A[0]) - $ord_A;
+            $target_ord += mb_ord($this->type_list_A[$code]) - $ord_A;
+        } elseif ($ord_a <= $target_ord and $target_ord <= $ord_a + 25) {
+            $target_ord += mb_ord($this->type_list_a[$code]) - $ord_a;
         }
 
         return mb_chr($target_ord);
