@@ -3,27 +3,27 @@
 @section('css')
     <style>
         .normal_button {
-            min-width: 150px;
+            min-width: 12%;
             font-family: inherit;
             appearance: none;
             border: 0;
             border-radius: 5px;
             background: hsl(221, 67%, 55%);
             color: #fff;
-            padding: 12px 20px;
+            padding: 1% 2%;
             font-size: 1.1rem;
             cursor: pointer;
         }
 
         .alert_button {
-            min-width: 150px;
+            min-width: 12%;
             font-family: inherit;
             appearance: none;
             border: 0;
             border-radius: 5px;
             background: hsl(0, 67%, 55%);
             color: #fff;
-            padding: 12px 20px;
+            padding: 1% 2%;
             font-size: 1.1rem;
             cursor: pointer;
         }
@@ -36,9 +36,8 @@
         }
 
         .main {
-            width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
+            margin-left: 15%;
+            margin-right: 15%;
             text-align: left;
             background-color: #ffffff;
             height: 100%;
@@ -48,7 +47,13 @@
             position: relative;
             background-color: #333333;
             color: #fff;
-            padding: 1px 40px;
+            padding: 2px 3%;
+        }
+
+        .textarea {
+            resize: none;
+            width: max(40%, 250px);
+            height: 40vh;
         }
 
     </style>
@@ -84,8 +89,8 @@
             <br>
             <form method="POST" action="/to-normal-code">
                 @csrf
-                <textarea name="target" rows=30, cols="70" placeholder="変換前">{{ $text }}</textarea>
-                <textarea name="result" rows=30, cols="70" placeholder="変換後" readonly>{{ $result }}</textarea>
+                <textarea name="target" placeholder="変換前" class="textarea">{{ $text }}</textarea>
+                <textarea name="result" placeholder="変換後" readonly class="textarea">{{ $result }}</textarea>
                 <br>
                 <input type="submit" name="change" value="変換" class="normal_button">
                 <input type="submit" name="translate" value="DeepLで翻訳" class="normal_button">
