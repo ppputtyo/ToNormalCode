@@ -37,6 +37,22 @@ class ToNormalController extends Controller
         '𝕒'
     );
 
+    private $type_list_ALPHA = array(
+        '𝚨',
+        '𝛢',
+        '𝜜',
+        '𝝖',
+        '𝞐'
+    );
+
+    private $type_list_alpha = array(
+        '𝛂',
+        '𝛼',
+        '𝜶',
+        '𝝰',
+        '𝞪',
+    );
+
     private $type_list_num = array(
         '𝟎',
         '𝟘',
@@ -111,6 +127,14 @@ class ToNormalController extends Controller
 
         foreach ($this->type_list_a as $a) {
             $char = $this->check_and_change($char, $a, 'a', 26);
+        }
+
+        foreach ($this->type_list_ALPHA as $A) {
+            $char = $this->check_and_change($char, $a, 'Α', 26);
+        }
+
+        foreach ($this->type_list_alpha as $a) {
+            $char = $this->check_and_change($char, $a, 'α', 25);
         }
 
         foreach ($this->type_list_num as $n) {
