@@ -61,10 +61,14 @@ class ToNormalController extends Controller
         for ($i = 0; $i < mb_strlen($target); $i++) {
             $tmp = mb_substr($target, $i, 1);
 
-            if (
-                ($tmp == "-") and ($i + 1 != mb_strlen($target)) and (preg_match("/\r\n|\r|\n| /", mb_substr($target, $i + 1, 1)))
-            ) {
-                $i += 2;
+            if ($tmp == "-") {
+                while (true) {
+                    if (($i + 1 != mb_strlen($target)) and (preg_match("/\r\n|\r|\n| /", mb_substr($target, $i + 1, 1)))) {
+                        $i++;
+                    } else {
+                        break;
+                    }
+                }
                 continue;
             }
 
