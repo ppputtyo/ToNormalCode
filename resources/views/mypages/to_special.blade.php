@@ -111,10 +111,10 @@
 
             <br>
             <a href="/to-normal-code">英字論文フォーマッタ</a>
-            <br>
+            {{-- <br>
             <br>
             <a href="https://twitter.com/p_kyopro">作者Twitter</a>
-            <br>
+            <br> --}}
         </body>
     </div>
 @endsection
