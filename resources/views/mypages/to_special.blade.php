@@ -55,24 +55,21 @@
             width: max(40%, 250px);
             height: 40vh;
         }
-
     </style>
 @endsection
 
 @section('javascript-head')
-
 @endsection
 
-@section('title', '英字論文フォーマッタ')
+@section('title')
+    <title>数学用英数字記号変換ツール</title>
+    <header class="header">
+        <h2>英数字→数学用英数字記号変換ツール</h2>
+    </header>
+@endsection
 
 
 @section('content')
-
-    <head>
-        <header class="header">
-            <h2>英数字→数学用英数字記号変換ツール</h2>
-        </header>
-    </head>
     <div class="main">
 
         <body>
@@ -102,8 +99,7 @@
                 ) }}
                 <br>
                 <textarea name="target" rows=30, cols="60" placeholder="変換前" class="textarea">{{ $text }}</textarea>
-                <textarea name="result" rows=30, cols="60" placeholder="変換後" readonly
-                    class="textarea">{{ $result }}</textarea>
+                <textarea name="result" rows=30, cols="60" placeholder="変換後" readonly class="textarea">{{ $result }}</textarea>
                 <br>
                 <input type="submit" name="change" value="変換" class="normal_button">
                 <br>
