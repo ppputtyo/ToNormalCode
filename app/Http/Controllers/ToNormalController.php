@@ -71,11 +71,22 @@ class ToNormalController extends Controller
                 "result" => ""
             ]);
         }
+        $deepl_flag = true;
+        if ($request->has("change")) {
+            $deepl_flag = false;
+        }
+
         $text = $request->target;
         $target = $text;
         $result = "";
         for ($i = 0; $i < mb_strlen($target); $i++) {
             $tmp = mb_substr($target, $i, 1);
+
+            if ($deepl_flag and $tmp == '/') {
+                $result .= "\\/";
+                continue;
+            }
+
 
             if ($tmp == "-") {
                 while (true) {
@@ -96,14 +107,14 @@ class ToNormalController extends Controller
             $result .= $tmp;
         }
 
-        if ($request->has("change")) {
+        if ($deepl_flag) {
+            $url = "https://www.deepl.com/ja/translator#en/ja/" . rawurlencode($result);
+            return redirect($url);
+        } else {
             return view("mypages.to_normal", [
                 "text" => $text,
                 "result" => $result
             ]);
-        } else {
-            $url = "https://www.deepl.com/ja/translator#en/ja/" . rawurlencode($result);
-            return redirect($url);
         }
     }
 
