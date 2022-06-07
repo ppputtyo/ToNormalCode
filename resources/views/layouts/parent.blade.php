@@ -8,8 +8,6 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @yield('title')
-
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     {{-- 個別のjavaScript読み込み --}}
@@ -23,6 +21,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     {{-- 個別のCSS読み込み --}}
     @yield('css')
+
+    @yield('title')
 </head>
 
 <body>
