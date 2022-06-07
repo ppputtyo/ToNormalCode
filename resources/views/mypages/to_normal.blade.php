@@ -55,24 +55,20 @@
             width: max(40%, 250px);
             height: 40vh;
         }
-
     </style>
 @endsection
 
 @section('javascript-head')
-
 @endsection
 
-@section('title', '英字論文フォーマッタ')
-
+@section('title')
+    <title>英字論文フォーマッタ</title>
+    <header class="header">
+        <h2>英字論文フォーマッタ</h2>
+    </header>
+@endsection
 
 @section('content')
-
-    <head>
-        <header class="header">
-            <h2>英字論文フォーマッタ</h2>
-        </header>
-    </head>
     <div class="main">
 
         <body>

@@ -62,7 +62,6 @@ class ToNormalController extends Controller
     );
 
 
-
     public function to_normal_code(Request $request)
     {
         if ((!$request->has("change") and !$request->has("translate")) or $request->has("reset")) {
@@ -71,6 +70,8 @@ class ToNormalController extends Controller
                 "result" => ""
             ]);
         }
+
+        //deeplで翻訳する場合はtrue
         $deepl_flag = true;
         if ($request->has("change")) {
             $deepl_flag = false;
@@ -79,14 +80,16 @@ class ToNormalController extends Controller
         $text = $request->target;
         $target = $text;
         $result = "";
+
+
         for ($i = 0; $i < mb_strlen($target); $i++) {
             $tmp = mb_substr($target, $i, 1);
 
+            //deepLで翻訳する場合は/の前に\がいる
             if ($deepl_flag and $tmp == '/') {
                 $result .= "\\/";
                 continue;
             }
-
 
             if ($tmp == "-") {
                 while (true) {
@@ -99,9 +102,21 @@ class ToNormalController extends Controller
                 continue;
             }
 
+
+            //連続する改行を削除
             if (preg_match("/\r\n|\r|\n/", $tmp)) {
-                $tmp = " ";
+                while (true) {
+                    if (($i + 1 != mb_strlen($target)) and (preg_match("/\r\n|\r|\n| /", mb_substr($target, $i + 1, 1)))) {
+                        $i++;
+                    } else {
+                        break;
+                    }
+                }
+                $result .= ' ';
+                continue;
             }
+
+
             $tmp = $this->to_normal($tmp);
 
             $result .= $tmp;
