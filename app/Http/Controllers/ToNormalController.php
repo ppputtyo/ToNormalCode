@@ -66,7 +66,7 @@ class ToNormalController extends Controller
     {
         if ((!$request->has("change") and !$request->has("translate")) or $request->has("reset")) {
             return view("mypages.to_normal", [
-                "text" => "",
+                "original_text" => "",
                 "result" => "",
                 "prev_function" => [1, 1, 1, 0]
             ]);
@@ -80,26 +80,35 @@ class ToNormalController extends Controller
 
         $function = $request->function;
 
-        $change_code_flag = (is_array($function) and array_key_exists("0", $function));
-        $delete_enter_flag = (is_array($function) and array_key_exists("1", $function));
-        $restore_word_flag = (is_array($function) and array_key_exists("2", $function));
-        $ignore_enters_flag = (is_array($function) and array_key_exists("3", $function));
 
-        $text = $request->target;
-        $target = $text;
+        $change_code_flag = false;
+        $delete_enter_flag = false;
+        $restore_word_flag = false;
+        $ignore_enters_flag = false;
+        if (is_array($function)) {
+            $change_code_flag =  array_key_exists("0", $function);
+            $delete_enter_flag = array_key_exists("1", $function);
+            $restore_word_flag = array_key_exists("2", $function);
+            $ignore_enters_flag = array_key_exists("3", $function);
+        }
+
+
+        $original_text = $request->target;
+        $target = $original_text;
         $result = "";
 
 
         for ($i = 0; $i < mb_strlen($target); $i++) {
-            $tmp = mb_substr($target, $i, 1);
+            $current_chr = mb_substr($target, $i, 1);
+
             //deepLで翻訳する場合は/の前に\がいる
-            if ($deepl_flag and $tmp == '/') {
+            if ($deepl_flag and $current_chr == '/') {
                 $result .= "\\/";
                 continue;
             }
 
             //単語の復元
-            if ($tmp == "-" and $restore_word_flag and ($i + 1 != mb_strlen($target) and preg_match("/\r|\n| /", mb_substr($target, $i + 1, 1)))) {
+            if ($current_chr == "-" and $restore_word_flag and ($i + 1 != mb_strlen($target) and preg_match("/\r|\n| /", mb_substr($target, $i + 1, 1)))) {
                 while (true) {
                     if (($i + 1 != mb_strlen($target)) and (preg_match("/\r|\n| /", mb_substr($target, $i + 1, 1)))) {
                         $i++;
@@ -110,13 +119,12 @@ class ToNormalController extends Controller
                 continue;
             }
 
-
             //連続する改行を削除
-            $ncount = 0;
-            if (preg_match("/\r|\n/", $tmp) and $delete_enter_flag) {
+            $enter_count = 0;
+            if ($delete_enter_flag and preg_match("/\r|\n/", $current_chr)) {
                 while (true) {
                     if (mb_substr($target, $i, 1) == "\n") {
-                        $ncount++;
+                        $enter_count++;
                     }
                     if (($i + 1 != mb_strlen($target)) and (preg_match("/\r|\n/", mb_substr($target, $i + 1, 1)))) {
                         $i++;
@@ -124,8 +132,10 @@ class ToNormalController extends Controller
                         break;
                     }
                 }
-                if ($ignore_enters_flag and $ncount >= 2) {
-                    for ($j = 0; $j < $ncount; $j++) {
+
+                //2つ以上の改行があった場合は改行を復元
+                if ($ignore_enters_flag and $enter_count >= 2) {
+                    for ($j = 0; $j < $enter_count; $j++) {
                         $result .= "\n";
                     }
                 } else {
@@ -137,10 +147,10 @@ class ToNormalController extends Controller
 
             //英数字記号の変換
             if ($change_code_flag) {
-                $tmp = $this->to_normal($tmp);
+                $current_chr = $this->to_normal($current_chr);
             }
 
-            $result .= $tmp;
+            $result .= $current_chr;
         }
 
         if ($deepl_flag) {
@@ -148,7 +158,7 @@ class ToNormalController extends Controller
             return redirect($url);
         } else {
             return view("mypages.to_normal", [
-                "text" => $text,
+                "text" => $original_text,
                 "result" => $result,
                 "prev_function" => $function
             ]);
