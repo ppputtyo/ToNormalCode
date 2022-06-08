@@ -107,6 +107,8 @@
 
             <br>
             <a href="/to-normal-code">英字論文フォーマッタ</a>
+            <br><br>
+            <a href="https://github.com/ppputtyo/ToNormalCode">GitHub</a>
             {{-- <br>
             <br>
             <a href="https://twitter.com/p_kyopro">作者Twitter</a>

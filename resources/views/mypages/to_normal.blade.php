@@ -99,6 +99,8 @@
             <br>
             副産物として普通の英数字を数学用英数字記号に変換するツールもできました。<br>
             <a href="/to-special-code">英数字→数学用英数字記号変換ツール</a>
+            <br><br>
+            <a href="https://github.com/ppputtyo/ToNormalCode">GitHub</a>
             {{-- <br><br>
             <a href="https://twitter.com/p_kyopro">作者Twitter</a>
             <br> --}}
