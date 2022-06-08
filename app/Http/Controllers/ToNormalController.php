@@ -66,7 +66,7 @@ class ToNormalController extends Controller
     {
         if ((!$request->has("change") and !$request->has("translate")) or $request->has("reset")) {
             return view("mypages.to_normal", [
-                "original_text" => "",
+                "text" => "",
                 "result" => "",
                 "prev_function" => [1, 1, 1, 0]
             ]);
