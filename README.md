@@ -6,8 +6,9 @@ https://to-normal-code.herokuapp.com/
 現在機能は以下の通り。
 
 -   数学用英数字記号 → 普通の英数字 (例: 𝔸→A)
--   /n(改行)→ 半角スペース
--   -/n の削除 (例: imple-/nment→implement)
+-   改行 → 半角スペース
+-   改行で分割された単語の復元 (例:imple-[改行]ment→implement)
+-   2 つ以上連続する改行は無視する
 -   ワンクリックでフォーマットしたものを DeepL で翻訳
 
 <hr>
