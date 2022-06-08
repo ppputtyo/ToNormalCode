@@ -99,7 +99,7 @@ class ToNormalController extends Controller
             }
 
             //単語の復元
-            if ($tmp == "-" and $restore_word_flag) {
+            if ($tmp == "-" and $restore_word_flag and ($i + 1 != mb_strlen($target) and preg_match("/\r|\n| /", mb_substr($target, $i + 1, 1)))) {
                 while (true) {
                     if (($i + 1 != mb_strlen($target)) and (preg_match("/\r|\n| /", mb_substr($target, $i + 1, 1)))) {
                         $i++;
