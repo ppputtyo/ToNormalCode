@@ -74,17 +74,21 @@
         <body>
             <br>
             英字論文を DeepL で正しく翻訳されるようにフォーマットするツールです。
-            <br>
-            現在機能は以下の通り。
-            <ul>
-                <li>数学用英数字記号→普通の英数字 (例: 𝔸→A)</li>
-                <li>/n(改行)→半角スペース</li>
-                <li>-/nの削除 (例: imple-/nment→implement)</li>
-                <li>ワンクリックでフォーマットしたものを DeepL で翻訳</li>
-            </ul>
-            <br>
+            <br><br>
             <form method="POST" action="/to-normal-code">
                 @csrf
+                <input type="checkbox" name="function[0]" value="1" @if (is_array($prev_function) and array_key_exists('0', $prev_function) and $prev_function['0'] == 1) checked="" @endif>
+                数学用英数字記号→普通の英数字 (例: 𝔸→A)
+                <br>
+                <input type="checkbox" name="function[1]" value="1" @if (is_array($prev_function) and array_key_exists('1', $prev_function) and $prev_function['1'] == 1) checked="" @endif>
+                改行→半角スペース
+                <br>
+                <input type="checkbox" name="function[2]" value="1" @if (is_array($prev_function) and array_key_exists('2', $prev_function) and $prev_function['2'] == 1) checked="" @endif>
+                改行で分割された単語の復元 (例:imple-[改行]ment→implement)
+                <br>
+                <input type="checkbox" name="function[3]" value="1" @if (is_array($prev_function) and array_key_exists('3', $prev_function) and $prev_function['3'] == 1) checked="" @endif>
+                2つ以上連続する改行は無視する
+                <br>
                 <textarea name="target" placeholder="変換前" class="textarea">{{ $text }}</textarea>
                 <textarea name="result" placeholder="変換後" readonly class="textarea">{{ $result }}</textarea>
                 <br>

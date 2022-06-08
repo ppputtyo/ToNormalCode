@@ -67,7 +67,8 @@ class ToNormalController extends Controller
         if ((!$request->has("change") and !$request->has("translate")) or $request->has("reset")) {
             return view("mypages.to_normal", [
                 "text" => "",
-                "result" => ""
+                "result" => "",
+                "prev_function" => [1, 1, 1, 0]
             ]);
         }
 
@@ -77,6 +78,13 @@ class ToNormalController extends Controller
             $deepl_flag = false;
         }
 
+        $function = $request->function;
+
+        $change_code_flag = (is_array($function) and array_key_exists("0", $function));
+        $delete_enter_flag = (is_array($function) and array_key_exists("1", $function));
+        $restore_word_flag = (is_array($function) and array_key_exists("2", $function));
+        $ignore_enters_flag = (is_array($function) and array_key_exists("3", $function));
+
         $text = $request->target;
         $target = $text;
         $result = "";
@@ -84,16 +92,16 @@ class ToNormalController extends Controller
 
         for ($i = 0; $i < mb_strlen($target); $i++) {
             $tmp = mb_substr($target, $i, 1);
-
             //deepLで翻訳する場合は/の前に\がいる
             if ($deepl_flag and $tmp == '/') {
                 $result .= "\\/";
                 continue;
             }
 
-            if ($tmp == "-") {
+            //単語の復元
+            if ($tmp == "-" and $restore_word_flag) {
                 while (true) {
-                    if (($i + 1 != mb_strlen($target)) and (preg_match("/\r\n|\r|\n| /", mb_substr($target, $i + 1, 1)))) {
+                    if (($i + 1 != mb_strlen($target)) and (preg_match("/\r|\n| /", mb_substr($target, $i + 1, 1)))) {
                         $i++;
                     } else {
                         break;
@@ -104,20 +112,33 @@ class ToNormalController extends Controller
 
 
             //連続する改行を削除
-            if (preg_match("/\r\n|\r|\n/", $tmp)) {
+            $ncount = 0;
+            if (preg_match("/\r|\n/", $tmp) and $delete_enter_flag) {
                 while (true) {
-                    if (($i + 1 != mb_strlen($target)) and (preg_match("/\r\n|\r|\n| /", mb_substr($target, $i + 1, 1)))) {
+                    if (mb_substr($target, $i, 1) == "\n") {
+                        $ncount++;
+                    }
+                    if (($i + 1 != mb_strlen($target)) and (preg_match("/\r|\n/", mb_substr($target, $i + 1, 1)))) {
                         $i++;
                     } else {
                         break;
                     }
                 }
-                $result .= ' ';
+                if ($ignore_enters_flag and $ncount >= 2) {
+                    for ($j = 0; $j < $ncount; $j++) {
+                        $result .= "\n";
+                    }
+                } else {
+                    $result .= " ";
+                }
+
                 continue;
             }
 
-
-            $tmp = $this->to_normal($tmp);
+            //英数字記号の変換
+            if ($change_code_flag) {
+                $tmp = $this->to_normal($tmp);
+            }
 
             $result .= $tmp;
         }
@@ -128,7 +149,8 @@ class ToNormalController extends Controller
         } else {
             return view("mypages.to_normal", [
                 "text" => $text,
-                "result" => $result
+                "result" => $result,
+                "prev_function" => $function
             ]);
         }
     }
@@ -166,7 +188,6 @@ class ToNormalController extends Controller
         foreach ($this->type_list_num as $n) {
             $char = $this->check_and_change($char, $n, '0', 10);
         }
-
 
         return $char;
     }
