@@ -68,6 +68,10 @@
     </header>
 @endsection
 
+@section('google_meta_tag')
+    <meta name="google-site-verification" content="q2WA-fehscnQ8J7Xl-2TPgHH-276MnD349Mrcc9exZU" />
+@endsection
+
 @section('content')
     <div class="main">
 
