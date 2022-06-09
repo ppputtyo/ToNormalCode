@@ -93,7 +93,7 @@
                 <textarea name="result" placeholder="変換後" readonly class="textarea">{{ $result }}</textarea>
                 <br>
                 <input type="submit" name="change" value="変換" class="normal_button">
-                <input type="submit" name="translate" value="DeepLで翻訳" class="normal_button">
+                <input type="submit" name="translate" value="DeepLで翻訳" class="normal_button" formtarget="_blank">
                 <input type="submit" name="reset" value="リセット" class="alert_button">
             </form>
             <br>
