@@ -63,16 +63,13 @@
 
 @section('title')
     <title>英字論文フォーマッタ</title>
-    <header class="header">
-        <h2>英字論文フォーマッタ</h2>
-    </header>
-@endsection
-
-@section('google_meta_tag')
-    <meta name="google-site-verification" content="q2WA-fehscnQ8J7Xl-2TPgHH-276MnD349Mrcc9exZU" />
 @endsection
 
 @section('content')
+    <header class="header">
+        <h2>英字論文フォーマッタ</h2>
+    </header>
+
     <div class="main">
 
         <body>

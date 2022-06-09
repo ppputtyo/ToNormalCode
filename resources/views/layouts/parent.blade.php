@@ -23,7 +23,7 @@
     @yield('css')
 
     @yield('title')
-    @yield('google_meta_tag')
+    <meta name="google-site-verification" content="q2WA-fehscnQ8J7Xl-2TPgHH-276MnD349Mrcc9exZU" />
 </head>
 
 <body>
