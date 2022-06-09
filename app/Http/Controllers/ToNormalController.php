@@ -98,8 +98,9 @@ class ToNormalController extends Controller
         $result = "";
 
 
-        for ($i = 0; $i < mb_strlen($target); $i++) {
-            $current_chr = mb_substr($target, $i, 1);
+        $idx = 0;
+        while ($idx < mb_strlen($target)) {
+            $current_chr = mb_substr($target, $idx, 1);
 
             //deepLで翻訳する場合は/の前に\がいる
             if ($deepl_flag and $current_chr == '/') {
@@ -108,11 +109,11 @@ class ToNormalController extends Controller
             }
 
             //単語の復元
-            if ($current_chr == "-" and $restore_word_flag and ($i + 1 != mb_strlen($target) and preg_match("/\r|\n| /", mb_substr($target, $i + 1, 1)))) {
+            if ($current_chr == "-" and $restore_word_flag and ($idx + 1 != mb_strlen($target) and preg_match("/\r|\n| /", mb_substr($target, $idx + 1, 1)))) {
                 while (true) {
-                    if (($i + 1 != mb_strlen($target)) and (preg_match("/\r|\n| /", mb_substr($target, $i + 1, 1)))) {
-                        $i++;
-                    } else {
+                    $idx++;
+                    $current_chr = mb_substr($target, $idx, 1);
+                    if ($idx == mb_strlen($target) or !preg_match("/\r|\n| /", $current_chr)) {
                         break;
                     }
                 }
@@ -123,12 +124,12 @@ class ToNormalController extends Controller
             $enter_count = 0;
             if ($delete_enter_flag and preg_match("/\r|\n/", $current_chr)) {
                 while (true) {
-                    if (mb_substr($target, $i, 1) == "\n") {
+                    if ($current_chr == "\n") {
                         $enter_count++;
                     }
-                    if (($i + 1 != mb_strlen($target)) and (preg_match("/\r|\n/", mb_substr($target, $i + 1, 1)))) {
-                        $i++;
-                    } else {
+                    $idx++;
+                    $current_chr = mb_substr($target, $idx, 1);
+                    if ($idx == mb_strlen($target) or !preg_match("/\r|\n/", $current_chr)) {
                         break;
                     }
                 }
@@ -141,7 +142,6 @@ class ToNormalController extends Controller
                 } else {
                     $result .= " ";
                 }
-
                 continue;
             }
 
@@ -151,6 +151,7 @@ class ToNormalController extends Controller
             }
 
             $result .= $current_chr;
+            $idx++;
         }
 
         if ($deepl_flag) {
