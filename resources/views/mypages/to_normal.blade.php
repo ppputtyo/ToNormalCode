@@ -32,10 +32,10 @@
             min-width: 3%;
             font-family: inherit;
             appearance: none;
-            border: 1px solid hsl(0, 0%, 0%);
+            border: 1px solid hsl(121, 49%, 46%);
             border-radius: 5px;
-            background: hsl(124, 44%, 63%);
-            color: #000000;
+            background: hsl(121, 49%, 46%);
+            color: #ffffff;
             padding: 5px 5px;
             font-size: 0.9rem;
             cursor: pointer;
