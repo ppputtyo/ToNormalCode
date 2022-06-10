@@ -91,6 +91,9 @@
                 <input type="checkbox" name="function[3]" value="1" @if (is_array($prev_function) and array_key_exists('3', $prev_function) and $prev_function['3'] == 1) checked="" @endif>
                 2つ以上連続する改行は無視する
                 <br>
+                <input type="checkbox" name="function[4]" value="1" @if (is_array($prev_function) and array_key_exists('4', $prev_function) and $prev_function['4'] == 1) checked="" @endif>
+                文末で改行する
+                <br>
                 <textarea name="target" placeholder="変換前" class="textarea">{{ $text }}</textarea>
                 <textarea name="result" placeholder="変換後" readonly class="textarea">{{ $result }}</textarea>
                 <br>

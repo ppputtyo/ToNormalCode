@@ -68,7 +68,7 @@ class ToNormalController extends Controller
             return view("mypages.to_normal", [
                 "text" => "",
                 "result" => "",
-                "prev_function" => [1, 1, 1, 0]
+                "prev_function" => [1, 1, 1, 0, 0]
             ]);
         }
 
@@ -85,11 +85,13 @@ class ToNormalController extends Controller
         $delete_enter_flag = false;
         $restore_word_flag = false;
         $ignore_enters_flag = false;
+        $enter_if_period_flag = false;
         if (is_array($function)) {
             $change_code_flag =  array_key_exists("0", $function);
             $delete_enter_flag = array_key_exists("1", $function);
             $restore_word_flag = array_key_exists("2", $function);
             $ignore_enters_flag = array_key_exists("3", $function);
+            $enter_if_period_flag = array_key_exists("4", $function);
         }
 
 
@@ -105,6 +107,7 @@ class ToNormalController extends Controller
             //deepLで翻訳する場合は/の前に\がいる
             if ($deepl_flag and $current_chr == '/') {
                 $result .= "\\/";
+                $idx++;
                 continue;
             }
 
@@ -112,8 +115,9 @@ class ToNormalController extends Controller
             if ($current_chr == "-" and $restore_word_flag and ($idx + 1 != mb_strlen($target) and preg_match("/\r|\n| /", mb_substr($target, $idx + 1, 1)))) {
                 while (true) {
                     $idx++;
+                    if ($idx == mb_strlen($target)) break;
                     $current_chr = mb_substr($target, $idx, 1);
-                    if ($idx == mb_strlen($target) or !preg_match("/\r|\n| /", $current_chr)) {
+                    if (!preg_match("/\r|\n| /", $current_chr)) {
                         break;
                     }
                 }
@@ -128,8 +132,10 @@ class ToNormalController extends Controller
                         $enter_count++;
                     }
                     $idx++;
+                    if ($idx == mb_strlen($target)) break;
+
                     $current_chr = mb_substr($target, $idx, 1);
-                    if ($idx == mb_strlen($target) or !preg_match("/\r|\n/", $current_chr)) {
+                    if (!preg_match("/\r|\n/", $current_chr)) {
                         break;
                     }
                 }
@@ -144,6 +150,43 @@ class ToNormalController extends Controller
                 }
                 continue;
             }
+
+            if ($enter_if_period_flag and $current_chr == ".") {
+                $buffer = ".";
+                $enter_count = 0;
+
+                while (true) {
+                    $idx++;
+                    if ($idx == mb_strlen($target)) break;
+
+                    $current_chr = mb_substr($target, $idx, 1);
+                    if ($current_chr == "\n") {
+                        $enter_count++;
+                    }
+                    if (!preg_match("/\r|\n| /", $current_chr)) {
+                        break;
+                    } else {
+                        $buffer .= $current_chr;
+                    }
+                }
+
+                $tmp_code = mb_ord($current_chr);
+                if (mb_ord("A") <= $tmp_code and $tmp_code <= mb_ord("Z")) {
+                    $result .= ".";
+                    if ($ignore_enters_flag and $enter_count >= 2) {
+                        for ($j = 0; $j < $enter_count; $j++) {
+                            $result .= "\n";
+                        }
+                    } else {
+                        $result .= "\n";
+                    }
+                } else {
+                    $result .= $buffer;
+                }
+                continue;
+            }
+
+
 
             //英数字記号の変換
             if ($change_code_flag) {
