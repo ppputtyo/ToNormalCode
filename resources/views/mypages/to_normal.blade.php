@@ -32,12 +32,12 @@
             min-width: 3%;
             font-family: inherit;
             appearance: none;
-            border: 1px solid hsl(124, 37%, 49%);
+            border: 1px solid hsl(0, 0%, 0%);
             border-radius: 5px;
-            background: hsl(124, 37%, 49%);
-            color: #fff;
+            background: hsl(124, 44%, 63%);
+            color: #000000;
             padding: 5px 5px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             cursor: pointer;
         }
 
@@ -50,7 +50,7 @@
             background: #fff;
             color: #333333;
             padding: 5px 5px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             cursor: pointer;
         }
 
@@ -63,7 +63,7 @@
             background: #333333;
             color: #fff;
             padding: 5px 5px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             cursor: pointer;
         }
 
