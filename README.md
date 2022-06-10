@@ -9,8 +9,8 @@ https://to-normal-code.herokuapp.com/
 -   改行 → 半角スペース
 -   改行で分割された単語の復元 (例:imple-[改行]ment→implement)
 -   2 つ以上連続する改行は無視する
+-   文末で改行する
 -   ワンクリックでフォーマットしたものを DeepL で翻訳
-
 <hr>
 
 ## 英数字 → 数学用英数字記号変換ツール
