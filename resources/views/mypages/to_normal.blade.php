@@ -28,15 +28,41 @@
             cursor: pointer;
         }
 
-        .button_small {
+        .all_select_button {
             min-width: 3%;
             font-family: inherit;
             appearance: none;
-            border: 0;
+            border: 1px solid hsl(124, 37%, 49%);
             border-radius: 5px;
-            background: hsl(221, 67%, 55%);
+            background: hsl(124, 37%, 49%);
             color: #fff;
-            padding: 0.3% 0.3%;
+            padding: 5px 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .all_unselect_button {
+            min-width: 3%;
+            font-family: inherit;
+            appearance: none;
+            border: 1px solid #333333;
+            border-radius: 5px;
+            background: #fff;
+            color: #333333;
+            padding: 5px 5px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .to_default_button {
+            min-width: 3%;
+            font-family: inherit;
+            border: 1px solid #333333;
+            appearance: none;
+            border-radius: 5px;
+            background: #333333;
+            color: #fff;
+            padding: 5px 5px;
             font-size: 0.8rem;
             cursor: pointer;
         }
@@ -107,9 +133,9 @@
         英字論文を DeepL で正しく翻訳されるようにフォーマットするツールです。
         <br><br>
         <p>
-            <input type="button" value="全選択" onclick="allcheck(true);" class="button_small">
-            <input type="button" value="全解除" onclick="allcheck(false);" class="button_small">
-            <input type="button" value="デフォルト" onclick="defaultcheck();" class="button_small">
+            <input type="button" value="全選択" onclick="allcheck(true);" class="all_select_button">
+            <input type="button" value="全解除" onclick="allcheck(false);" class="all_unselect_button">
+            <input type="button" value="デフォルト" onclick="defaultcheck();" class="to_default_button">
         </p>
         <form method="POST" name="form" action="/to-normal-code">
             @csrf
