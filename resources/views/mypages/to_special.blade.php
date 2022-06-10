@@ -28,13 +28,6 @@
             cursor: pointer;
         }
 
-        .body {
-            text-align: center;
-            background-color: #333333;
-            margin: 0px;
-            padding: 0px;
-        }
-
         .main {
             margin-left: 15%;
             margin-right: 15%;
@@ -71,48 +64,39 @@
 
 @section('content')
     <div class="main">
+        <br>
+        通常の英数字を数学用英数字記号に変換するツールです。<br>
+        Hello World → 𝓗𝓮𝓵𝓵𝓸 𝓦𝓸𝓻𝓵𝓭 みたいな変換が簡単にできます。(環境によってはうまく表示されない場合があるかもです。)<br><br>
+        <form method="POST" action="/to-special-code">
+            @csrf
+            {{ Form::select(
+                'code',
+                [
+                    '𝐀, 𝐚 [セリフ(Bold)]',
+                    '𝐴, 𝑎 [セリフ(Italic)]',
+                    '𝑨, 𝒂 [セリフ(Bold italic)]',
+                    '𝖠, 𝖺 [サンセリフ(Normal)]',
+                    '𝗔, 𝗮 [サンセリフ(Bold)]',
+                    '𝘈, 𝘢 [サンセリフ(Italic)]',
+                    '𝘼, 𝙖 [サンセリフ(Bold Italic)]',
+                    '𝒜, 𝒶 [筆記体(Normal)]',
+                    '𝓐, 𝓪 [筆記体(Bold)]',
+                    '𝔄, 𝔞 [フラクトゥール(Normal)]',
+                    '𝕬, 𝖆 [フラクトゥール(Bold)]',
+                    '𝙰, 𝚊 [等幅フォント(Normal)]',
+                    '𝔸, 𝕒 [黒板太字(Bold)]',
+                ],
+                ['selected' => $code],
+            ) }}
+            <br>
+            <textarea name="target" rows=30, cols="60" placeholder="変換前" class="textarea">{{ $text }}</textarea>
+            <textarea name="result" rows=30, cols="60" placeholder="変換後" readonly class="textarea">{{ $result }}</textarea>
+            <br>
+            <input type="submit" name="change" value="変換" class="normal_button">
+            <br>
+        </form>
 
-        <body>
-            <br>
-            通常の英数字を数学用英数字記号に変換するツールです。<br>
-            Hello World → 𝓗𝓮𝓵𝓵𝓸 𝓦𝓸𝓻𝓵𝓭 みたいな変換が簡単にできます。(環境によってはうまく表示されない場合があるかもです。)<br><br>
-            <form method="POST" action="/to-special-code">
-                @csrf
-                {{ Form::select(
-                    'code',
-                    [
-                        '𝐀, 𝐚 [セリフ(Bold)]',
-                        '𝐴, 𝑎 [セリフ(Italic)]',
-                        '𝑨, 𝒂 [セリフ(Bold italic)]',
-                        '𝖠, 𝖺 [サンセリフ(Normal)]',
-                        '𝗔, 𝗮 [サンセリフ(Bold)]',
-                        '𝘈, 𝘢 [サンセリフ(Italic)]',
-                        '𝘼, 𝙖 [サンセリフ(Bold Italic)]',
-                        '𝒜, 𝒶 [筆記体(Normal)]',
-                        '𝓐, 𝓪 [筆記体(Bold)]',
-                        '𝔄, 𝔞 [フラクトゥール(Normal)]',
-                        '𝕬, 𝖆 [フラクトゥール(Bold)]',
-                        '𝙰, 𝚊 [等幅フォント(Normal)]',
-                        '𝔸, 𝕒 [黒板太字(Bold)]',
-                    ],
-                    ['selected' => $code],
-                ) }}
-                <br>
-                <textarea name="target" rows=30, cols="60" placeholder="変換前" class="textarea">{{ $text }}</textarea>
-                <textarea name="result" rows=30, cols="60" placeholder="変換後" readonly class="textarea">{{ $result }}</textarea>
-                <br>
-                <input type="submit" name="change" value="変換" class="normal_button">
-                <br>
-            </form>
-
-            <br>
-            <a href="/to-normal-code">英字論文フォーマッタ</a>
-            <br><br>
-            <a href="https://github.com/ppputtyo/ToNormalCode">GitHub</a>
-            {{-- <br>
-            <br>
-            <a href="https://twitter.com/p_kyopro">作者Twitter</a>
-            <br> --}}
-        </body>
+        <br>
+        <a href="/to-normal-code">英字論文フォーマッタ</a>
     </div>
 @endsection

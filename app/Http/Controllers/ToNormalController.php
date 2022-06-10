@@ -187,7 +187,6 @@ class ToNormalController extends Controller
             }
 
 
-
             //英数字記号の変換
             if ($change_code_flag) {
                 $current_chr = $this->to_normal($current_chr);

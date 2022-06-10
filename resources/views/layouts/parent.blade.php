@@ -23,6 +23,7 @@
     @yield('css')
 
     @yield('title')
+    @yield('meta')
 </head>
 
 <body>
