@@ -208,7 +208,7 @@ class ToNormalController extends Controller
 
         if ($deepl_flag) {
             $url = "https://www.deepl.com/translator#en/ja/" . rawurlencode($result);
-            return redirect($url);
+            return redirect()->away($url);
         } else {
             return view("mypages.to_normal", [
                 "text" => $original_text,
