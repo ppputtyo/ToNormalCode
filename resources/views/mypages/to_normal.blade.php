@@ -138,7 +138,11 @@
     <div class="main">
         <br>
         英字論文を DeepL で正しく翻訳されるようにフォーマットするツールです。
-        <br><br>
+        <br>
+        <h3>
+            <font color="#ff4500">(注) ブラウザによってはポップアップ機能のブロックを解除しないと「DeepLで翻訳」機能が使えません。</font>
+        </h3>
+        <br>
         <p>
             <input type="button" value="全選択" onclick="allcheck(true);" class="all_select_button">
             <input type="button" value="全解除" onclick="allcheck(false);" class="all_unselect_button">
