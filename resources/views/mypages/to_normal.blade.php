@@ -176,7 +176,7 @@
             5000文字を超えた場合に分割してDeepLで翻訳する
             <br>
 
-            <textarea name="target" placeholder="変換前" class="textarea">{{ $text }}</textarea>
+            <textarea name="target" placeholder="変換前" class="textarea" maxlength="300000">{{ $text }}</textarea>
             <textarea name="result" placeholder="変換後" readonly class="textarea">{{ $result }}</textarea>
             <br>
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+// use Illuminate\Support\Facades\Validator;
 
 
 class ToNormalController extends Controller
@@ -94,17 +94,6 @@ class ToNormalController extends Controller
         }
 
         $original_text = $request->target;
-        $validator = Validator::make($request->all(), [
-            'target' =>  'max:500000'
-        ]);
-
-        if ($validator->fails()) {
-            return view("mypages.to_normal", [
-                "text" => $original_text,
-                "result" => "エラー: 入力文字列が長すぎます",
-                "prev_function" => $function
-            ]);
-        }
         $target = $original_text;
         $result = "";
 
