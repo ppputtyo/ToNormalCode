@@ -66,8 +66,8 @@ class ToNormalController extends Controller
             return view("mypages.to_normal", [
                 "text" => "",
                 "result" => "",
-                "prev_function" => [1, 1, 1, 0, 0],
-                "url" => ""
+                "prev_function" => [1, 1, 1, 0, 0, 1],
+                "url" => []
             ]);
         }
 
@@ -83,12 +83,14 @@ class ToNormalController extends Controller
         $restore_word_flag = false;
         $ignore_enters_flag = false;
         $enter_if_period_flag = false;
+        $split_5000_flag = false;
         if (is_array($function)) {
             $change_code_flag =  array_key_exists("0", $function);
             $delete_enter_flag = array_key_exists("1", $function);
             $restore_word_flag = array_key_exists("2", $function);
             $ignore_enters_flag = array_key_exists("3", $function);
             $enter_if_period_flag = array_key_exists("4", $function);
+            $split_5000_flag = array_key_exists("5", $function);
         }
 
         $original_text = $request->target;
@@ -106,17 +108,24 @@ class ToNormalController extends Controller
         $target = $original_text;
         $result = "";
 
-
         //対象テキストを1文字ずつ分割して配列に格納
         $target_array = mb_str_split($target);
         $target_len = count($target_array);
         $idx = 0;
+        $result_idx = 0;
+
+        $result_array = array();
+        $result_idx = 0;
+        array_push($result_array, "");
+        $tmp_result = "";
+
         while ($idx < $target_len) {
             $current_chr = $target_array[$idx];
 
             //deepLで翻訳する場合は/の前に\がいる
-            if ($deepl_flag and $current_chr == '/') {
-                $result .= "\\/";
+            if ($deepl_flag and ($current_chr == '/' or $current_chr == '|')) {
+                $tmp_result .= "\\";
+                $tmp_result .= $current_chr;
                 $idx++;
                 continue;
             }
@@ -153,17 +162,18 @@ class ToNormalController extends Controller
                 //2つ以上の改行があった場合は改行を復元
                 if ($ignore_enters_flag and $enter_count >= 2) {
                     for ($j = 0; $j < $enter_count; $j++) {
-                        $result .= "\n";
+                        $tmp_result .= "\n";
                     }
                 } else {
-                    $result .= " ";
+                    $tmp_result .= " ";
                 }
                 continue;
             }
 
 
-            if ($enter_if_period_flag and $current_chr == "." and $idx + 1 != $target_len and preg_match("/\r|\n| /", $target_array[$idx + 1])) {
-                $buffer = ".";
+            if ($current_chr == "." and $idx + 1 != $target_len and preg_match("/\r|\n| /", $target_array[$idx + 1])) {
+
+                $buffer = "";
                 $enter_count = 0;
 
                 while (true) {
@@ -183,16 +193,34 @@ class ToNormalController extends Controller
 
                 $tmp_code = mb_ord($current_chr);
                 if (mb_ord("A") <= $tmp_code and $tmp_code <= mb_ord("Z")) {
-                    $result .= ".";
-                    if ($ignore_enters_flag and $enter_count >= 2) {
-                        for ($j = 0; $j < $enter_count; $j++) {
-                            $result .= "\n";
-                        }
+                    if ($result_idx != 0 or mb_strlen($result_array[$result_idx]) != 0) {
+                        $result_array[$result_idx] .= ".";
+                    }
+                    $len = mb_strlen($tmp_result);
+
+                    if (mb_strlen($result_array[$result_idx]) + $len >= 4900) {
+                        array_push($result_array, "");
+                        $result_idx++;
+                        $result_array[$result_idx] .= $tmp_result;
+                        $tmp_result = "";
                     } else {
-                        $result .= "\n";
+                        $result_array[$result_idx] .= $tmp_result;
+                        $tmp_result = "";
+                        if ($enter_if_period_flag) {
+                            if ($ignore_enters_flag and $enter_count >= 2) {
+                                for ($j = 0; $j < $enter_count; $j++) {
+                                    $tmp_result .= "\n";
+                                }
+                            } else {
+                                $tmp_result .= "\n";
+                            }
+                        } else {
+                            $tmp_result .= $buffer;
+                        }
                     }
                 } else {
-                    $result .= $buffer;
+                    $tmp_result .= ".";
+                    $tmp_result .= $buffer;
                 }
                 continue;
             }
@@ -203,12 +231,39 @@ class ToNormalController extends Controller
                 $current_chr = $this->to_normal($current_chr);
             }
 
-            $result .= $current_chr;
+            $tmp_result .= $current_chr;
             $idx++;
         }
 
+        $len = mb_strlen($tmp_result);
+        if (mb_strlen($result_array[$result_idx]) + $len >= 4900) {
+            array_push($result_array, "");
+            $result_idx++;
+        }
+        $result_array[$result_idx] .= $tmp_result;
+        $tmp_result = "";
+
         if ($deepl_flag) {
-            $url = "https://www.deepl.com/translator#en/ja/" . rawurlencode($result);
+            $result = "";
+            foreach ($result_array as &$tmp) {
+                if ($enter_if_period_flag) {
+                    $result .= "\n";
+                }
+                $result .= $tmp;
+            }
+
+            $url = array();
+            if ($split_5000_flag) {
+                foreach ($result_array as &$tmp) {
+                    $tmp_url = "https://www.deepl.com/translator#en/ja/" . rawurlencode($tmp);
+                    array_push($url, $tmp_url);
+                }
+            } else {
+                $tmp_url = "https://www.deepl.com/translator#en/ja/" . rawurlencode($result);
+                array_push($url, $tmp_url);
+            }
+
+
             return view("mypages.to_normal", [
                 "text" => $original_text,
                 "result" => $result,
@@ -216,11 +271,19 @@ class ToNormalController extends Controller
                 "url" => $url
             ]);
         } else {
+            $result = "";
+            foreach ($result_array as &$tmp) {
+                if ($enter_if_period_flag) {
+                    $result .= "\n";
+                }
+                $result .= $tmp;
+            }
+
             return view("mypages.to_normal", [
                 "text" => $original_text,
                 "result" => $result,
                 "prev_function" => $function,
-                "url" => ""
+                "url" => []
             ]);
         }
     }

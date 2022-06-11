@@ -93,7 +93,7 @@
 @section('javascript-head')
     <script>
         function allcheck(tf) {
-            for (i = 1; i <= 5; i++) {
+            for (i = 1; i <= 6; i++) {
                 document.form.elements[i].checked = tf; // ON・OFFを切り替え
             }
         }
@@ -101,9 +101,15 @@
         window.addEventListener("load", execFunction);
 
         function execFunction() {
-            const url = '{{ $url }}';
-            if (url != "") {
-                window.open(url);
+            var urls = @json($url);
+            if (urls.length == 0) {
+                return;
+            }
+            let message = urls.length + "個のDeepLタブを表示します。"
+            if (confirm(message)) {
+                for (const url of urls) {
+                    window.open(url);
+                }
             }
         }
 
@@ -113,9 +119,10 @@
                 2: true,
                 3: true,
                 4: false,
-                5: false
+                5: false,
+                6: true
             }
-            for (i = 1; i <= 5; i++) {
+            for (i = 1; i <= 6; i++) {
                 document.form.elements[i].checked =
                     default_tf[i]; // ON・OFFを切り替え
             }
@@ -140,7 +147,7 @@
         英字論文を DeepL で正しく翻訳されるようにフォーマットするツールです。
         <br>
         <h3>
-            <font color="#ff4500">(注) ブラウザによってはポップアップ機能のブロックを解除しないと「DeepLで翻訳」機能が使えません。</font>
+            <font color="#ff4500">(注) ブラウザのポップアップ機能のブロックを解除しないと「DeepLで翻訳」機能が使えません。</font>
         </h3>
         <br>
         <p>
@@ -164,6 +171,9 @@
             <br>
             <input type="checkbox" name="function[4]" value="1" @if (is_array($prev_function) and array_key_exists('4', $prev_function) and $prev_function['4'] == 1) checked="" @endif>
             文末で改行する
+            <br>
+            <input type="checkbox" name="function[5]" value="1" @if (is_array($prev_function) and array_key_exists('5', $prev_function) and $prev_function['5'] == 1) checked="" @endif>
+            5000文字を超えた場合に分割してDeepLで翻訳する
             <br>
 
             <textarea name="target" placeholder="変換前" class="textarea">{{ $text }}</textarea>
