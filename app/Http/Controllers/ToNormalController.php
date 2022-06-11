@@ -36,7 +36,6 @@ class ToNormalController extends Controller
         '𝚊',
         '𝕒'
     );
-
     private $type_list_ALPHA = array(
         '𝚨',
         '𝛢',
@@ -44,7 +43,6 @@ class ToNormalController extends Controller
         '𝝖',
         '𝞐'
     );
-
     private $type_list_alpha = array(
         '𝛂',
         '𝛼',
@@ -52,7 +50,6 @@ class ToNormalController extends Controller
         '𝝰',
         '𝞪',
     );
-
     private $type_list_num = array(
         '𝟎',
         '𝟘',
@@ -61,10 +58,9 @@ class ToNormalController extends Controller
         '𝟶'
     );
 
-
     public function to_normal_code(Request $request)
     {
-        if ((!$request->has("change") and !$request->has("translate")) or $request->has("reset")) {
+        if (!($request->has("change") or $request->has("translate")) or $request->has("reset")) {
             return view("mypages.to_normal", [
                 "text" => "",
                 "result" => "",

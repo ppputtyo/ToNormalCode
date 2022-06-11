@@ -169,6 +169,7 @@
         副産物として普通の英数字を数学用英数字記号に変換するツールもできました。<br>
         <a href="/to-special-code">英数字→数学用英数字記号変換ツール</a>
         <br><br>
-        <a href="https://github.com/ppputtyo/ToNormalCode">GitHub</a>
+        欲しい機能、バグ報告、質問等あれば<a href="https://github.com/ppputtyo/ToNormalCode">GitHub</a>のisuueまでよろしくお願いします。<br>
+
     </div>
 @endsection

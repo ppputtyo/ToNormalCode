@@ -98,5 +98,7 @@
 
         <br>
         <a href="/to-normal-code">英字論文フォーマッタ</a>
+        <br><br>
+        欲しい機能、バグ報告、質問等あれば<a href="https://github.com/ppputtyo/ToNormalCode">GitHub</a>のisuueまでよろしくお願いします。<br>
     </div>
 @endsection
