@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class ToNormalController extends Controller
 {
@@ -75,8 +77,6 @@ class ToNormalController extends Controller
         }
 
         $function = $request->function;
-
-
         $change_code_flag = false;
         $delete_enter_flag = false;
         $restore_word_flag = false;
@@ -90,15 +90,33 @@ class ToNormalController extends Controller
             $enter_if_period_flag = array_key_exists("4", $function);
         }
 
-
         $original_text = $request->target;
+        $validator = Validator::make($request->all(), [
+            'target' =>  'max:500000'
+        ]);
+        if ($validator->fails()) {
+            return view("mypages.to_normal", [
+                "text" => $original_text,
+                "result" => "エラー: 入力文字列が長すぎます",
+                "prev_function" => $function
+            ]);
+        }
         $target = $original_text;
         $result = "";
 
 
+
+
+
         $idx = 0;
-        while ($idx < mb_strlen($target)) {
-            $current_chr = mb_substr($target, $idx, 1);
+
+
+        //対象テキストを1文字ずつ分割して配列に格納
+        $target_array = mb_str_split($target);
+        $target_len = count($target_array);
+
+        while ($idx < $target_len) {
+            $current_chr = $target_array[$idx];
 
             //deepLで翻訳する場合は/の前に\がいる
             if ($deepl_flag and $current_chr == '/') {
@@ -108,11 +126,11 @@ class ToNormalController extends Controller
             }
 
             //単語の復元
-            if ($current_chr == "-" and $restore_word_flag and ($idx + 1 != mb_strlen($target) and preg_match("/\r|\n| /", mb_substr($target, $idx + 1, 1)))) {
+            if ($current_chr == "-" and $restore_word_flag and ($idx + 1 != $target_len and preg_match("/\r|\n| /", $target_array[$idx + 1]))) {
                 while (true) {
                     $idx++;
-                    if ($idx == mb_strlen($target)) break;
-                    $current_chr = mb_substr($target, $idx, 1);
+                    if ($idx == $target_len) break;
+                    $current_chr = $target_array[$idx];
                     if (!preg_match("/\r|\n| /", $current_chr)) {
                         break;
                     }
@@ -128,9 +146,9 @@ class ToNormalController extends Controller
                         $enter_count++;
                     }
                     $idx++;
-                    if ($idx == mb_strlen($target)) break;
+                    if ($idx == $target_len) break;
 
-                    $current_chr = mb_substr($target, $idx, 1);
+                    $current_chr = $target_array[$idx];
                     if (!preg_match("/\r|\n/", $current_chr)) {
                         break;
                     }
@@ -147,15 +165,16 @@ class ToNormalController extends Controller
                 continue;
             }
 
-            if ($enter_if_period_flag and $current_chr == ".") {
+
+            if ($enter_if_period_flag and $current_chr == "." and $idx + 1 != $target_len and preg_match("/\r|\n| /", $target_array[$idx + 1])) {
                 $buffer = ".";
                 $enter_count = 0;
 
                 while (true) {
                     $idx++;
-                    if ($idx == mb_strlen($target)) break;
+                    if ($idx == $target_len) break;
 
-                    $current_chr = mb_substr($target, $idx, 1);
+                    $current_chr = $target_array[$idx];
                     if ($current_chr == "\n") {
                         $enter_count++;
                     }
