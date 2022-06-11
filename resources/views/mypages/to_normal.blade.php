@@ -97,8 +97,16 @@
                 document.form.elements[i].checked = tf; // ON・OFFを切り替え
             }
         }
-    </script>
-    <script>
+
+        window.addEventListener("load", execFunction);
+
+        function execFunction() {
+            const url = '{{ $url }}';
+            if (url != "") {
+                window.open(url);
+            }
+        }
+
         function defaultcheck() {
             default_tf = {
                 1: true,
@@ -127,7 +135,6 @@
     <header class="header">
         <h2>英字論文フォーマッタ</h2>
     </header>
-
     <div class="main">
         <br>
         英字論文を DeepL で正しく翻訳されるようにフォーマットするツールです。
@@ -161,7 +168,7 @@
 
             <p>
                 <input type="submit" name="change" value="変換" class="normal_button">
-                <input type="submit" name="translate" value="DeepLで翻訳" class="normal_button" formtarget="_blank">
+                <input type="submit" name="translate" value="DeepLで翻訳" class="normal_button">
                 <input type="submit" name="reset" value="リセット" class="alert_button">
             </p>
         </form>

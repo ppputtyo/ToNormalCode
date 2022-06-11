@@ -66,7 +66,8 @@ class ToNormalController extends Controller
             return view("mypages.to_normal", [
                 "text" => "",
                 "result" => "",
-                "prev_function" => [1, 1, 1, 0, 0]
+                "prev_function" => [1, 1, 1, 0, 0],
+                "url" => ""
             ]);
         }
 
@@ -208,12 +209,18 @@ class ToNormalController extends Controller
 
         if ($deepl_flag) {
             $url = "https://www.deepl.com/translator#en/ja/" . rawurlencode($result);
-            return redirect()->away($url);
+            return view("mypages.to_normal", [
+                "text" => $original_text,
+                "result" => $result,
+                "prev_function" => $function,
+                "url" => $url
+            ]);
         } else {
             return view("mypages.to_normal", [
                 "text" => $original_text,
                 "result" => $result,
-                "prev_function" => $function
+                "prev_function" => $function,
+                "url" => ""
             ]);
         }
     }
