@@ -235,6 +235,9 @@ class ToNormalController extends Controller
             $idx++;
         }
 
+        if ($result_idx != 0 or mb_strlen($result_array[$result_idx]) != 0) {
+            $result_array[$result_idx] .= ".";
+        }
         $len = mb_strlen($tmp_result);
         if (mb_strlen($result_array[$result_idx]) + $len >= 4900) {
             array_push($result_array, "");
