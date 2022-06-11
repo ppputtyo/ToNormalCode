@@ -94,6 +94,7 @@ class ToNormalController extends Controller
         $validator = Validator::make($request->all(), [
             'target' =>  'max:500000'
         ]);
+
         if ($validator->fails()) {
             return view("mypages.to_normal", [
                 "text" => $original_text,
@@ -105,16 +106,10 @@ class ToNormalController extends Controller
         $result = "";
 
 
-
-
-
-        $idx = 0;
-
-
         //対象テキストを1文字ずつ分割して配列に格納
         $target_array = mb_str_split($target);
         $target_len = count($target_array);
-
+        $idx = 0;
         while ($idx < $target_len) {
             $current_chr = $target_array[$idx];
 
@@ -212,7 +207,7 @@ class ToNormalController extends Controller
         }
 
         if ($deepl_flag) {
-            $url = "https://www.deepl.com/ja/translator#en/ja/" . rawurlencode($result);
+            $url = "https://www.deepl.com/translator#en/ja/" . rawurlencode($result);
             return redirect($url);
         } else {
             return view("mypages.to_normal", [
