@@ -67,25 +67,62 @@
             cursor: pointer;
         }
 
-        .main {
-            margin-left: 15%;
-            margin-right: 15%;
-            text-align: left;
-            background-color: #ffffff;
-            height: 100%;
+
+
+
+
+
+        /* スマホ */
+        @media screen and (min-width:0px) and (max-width: 459px) {
+            .icon {
+                width: 80%;
+            }
+
+            .main {
+                margin-left: 5%;
+                margin-right: 5%;
+                text-align: left;
+                background-color: #ffffff;
+                height: 100%;
+            }
+
+            .textarea {
+                resize: none;
+                width: 90%;
+                height: 20vh;
+            }
+
+            .header {
+                position: relative;
+                padding: 2% 2%;
+            }
         }
 
-        .header {
-            position: relative;
-            background-color: #333333;
-            color: #fff;
-            padding: 2px 3%;
-        }
+        /* PC */
+        @media screen and (min-width:460px) {
+            .icon {
+                height: 40px;
+                margin-left: 5px;
+            }
 
-        .textarea {
-            resize: none;
-            width: max(40%, 250px);
-            height: 40vh;
+            .main {
+                margin-left: 15%;
+                margin-right: 15%;
+                text-align: left;
+                background-color: #ffffff;
+                height: 100%;
+            }
+
+            .textarea {
+                resize: none;
+                width: 45%;
+                height: 40vh;
+            }
+
+            .header {
+                position: relative;
+                padding: 5px 5px;
+            }
         }
     </style>
 @endsection
@@ -140,16 +177,14 @@
 
 @section('content')
     <header class="header">
-        <h2>英字論文フォーマッタ</h2>
+        <a href="/"><img src="/images/logo.png" class="icon"></a>
+        <hr size="2" color=#646464>
     </header>
     <div class="main">
-        <br>
         英字論文を DeepL で正しく翻訳されるようにフォーマットするツールです。
-        <br>
         <h3>
-            <font color="#ff4500">(注) ブラウザのポップアップ機能のブロックを解除しないと「DeepLで翻訳」機能が使えません。</font>
+            <font color="#ff4500">※ブラウザのポップアップ機能のブロックを解除しないと「DeepLで翻訳」機能が使えません。</font>
         </h3>
-        <br>
         <p>
             <input type="button" value="全選択" onclick="allcheck(true);" class="all_select_button">
             <input type="button" value="全解除" onclick="allcheck(false);" class="all_unselect_button">
@@ -187,10 +222,11 @@
             </p>
         </form>
         <br>
+        欲しい機能、バグ報告、質問等あれば<a href="https://github.com/ppputtyo/ToNormalCode">GitHub</a>のissueまでよろしくお願いします。<br>
+        <br>
         副産物として普通の英数字を数学用英数字記号に変換するツールもできました。<br>
         <a href="/to-special-code">英数字→数学用英数字記号変換ツール</a>
-        <br><br>
-        欲しい機能、バグ報告、質問等あれば<a href="https://github.com/ppputtyo/ToNormalCode">GitHub</a>のisuueまでよろしくお願いします。<br>
+
 
     </div>
 @endsection
