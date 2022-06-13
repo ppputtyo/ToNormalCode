@@ -66,7 +66,7 @@ class ToNormalController extends Controller
             return view("mypages.to_normal", [
                 "text" => "",
                 "result" => "",
-                "prev_function" => [1, 1, 1, 0, 0, 1],
+                "prev_function" => [1, 1, 1, 0, 0, 1, 0],
                 "url" => []
             ]);
         }

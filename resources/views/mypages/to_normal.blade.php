@@ -190,7 +190,7 @@
 @section('javascript-head')
     <script>
         function allcheck(tf) {
-            for (i = 1; i <= 6; i++) {
+            for (i = 1; i <= 7; i++) {
                 document.form.elements[i].checked = tf; // ON・OFFを切り替え
             }
         }
@@ -202,8 +202,14 @@
             if (urls.length == 0) {
                 return;
             }
-            let message = urls.length + "個のDeepLタブを表示します。"
-            if (confirm(message)) {
+            const prefunc = @json($prev_function);
+
+            let message = urls.length + "個のDeepLタブを表示します。";
+            if (prefunc['6'] == 1) {
+                for (const url of urls) {
+                    window.open(url);
+                }
+            } else if (confirm(message)) {
                 for (const url of urls) {
                     window.open(url);
                 }
@@ -217,9 +223,10 @@
                 3: true,
                 4: false,
                 5: false,
-                6: true
+                6: true,
+                7: false
             }
-            for (i = 1; i <= 6; i++) {
+            for (i = 1; i <= 7; i++) {
                 document.form.elements[i].checked =
                     default_tf[i]; // ON・OFFを切り替え
             }
@@ -269,6 +276,9 @@
             <br>
             <input type="checkbox" name="function[5]" value="1" @if (is_array($prev_function) and array_key_exists('5', $prev_function) and $prev_function['5'] == 1) checked="" @endif>
             5000文字を超えた場合に分割してDeepLで翻訳する
+            <br>
+            <input type="checkbox" name="function[6]" value="1" @if (is_array($prev_function) and array_key_exists('6', $prev_function) and $prev_function['6'] == 1) checked="" @endif>
+            DeepLで翻訳時に新規タブを開くことを確認しない<font color="#ff4500">(※翻訳後にリロードを行うと確認無しでタブが開きます)</font>
             <br>
 
             <textarea name="target" placeholder="変換前" class="textarea" maxlength="300000">{{ $text }}</textarea>
