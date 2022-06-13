@@ -2,76 +2,6 @@
 
 @section('css')
     <style>
-        .normal_button {
-            min-width: 12%;
-            font-family: inherit;
-            appearance: none;
-            border: 0;
-            border-radius: 5px;
-            background: hsl(221, 67%, 55%);
-            color: #fff;
-            padding: 1% 2%;
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
-
-        .alert_button {
-            min-width: 12%;
-            font-family: inherit;
-            appearance: none;
-            border: 0;
-            border-radius: 5px;
-            background: hsl(0, 67%, 55%);
-            color: #fff;
-            padding: 1% 2%;
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
-
-        .all_select_button {
-            min-width: 3%;
-            font-family: inherit;
-            appearance: none;
-            border: 1px solid hsl(121, 49%, 46%);
-            border-radius: 5px;
-            background: hsl(121, 49%, 46%);
-            color: #ffffff;
-            padding: 5px 5px;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .all_unselect_button {
-            min-width: 3%;
-            font-family: inherit;
-            appearance: none;
-            border: 1px solid #333333;
-            border-radius: 5px;
-            background: #fff;
-            color: #333333;
-            padding: 5px 5px;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-        .to_default_button {
-            min-width: 3%;
-            font-family: inherit;
-            border: 1px solid #333333;
-            appearance: none;
-            border-radius: 5px;
-            background: #333333;
-            color: #fff;
-            padding: 5px 5px;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-
-
-
-
-
-
         /* スマホ */
         @media screen and (min-width:0px) and (max-width: 459px) {
             .icon {
@@ -88,8 +18,73 @@
 
             .textarea {
                 resize: none;
-                width: 90%;
-                height: 20vh;
+                width: 99%;
+                height: 30vh;
+            }
+
+            .normal_button {
+                min-width: 20%;
+                font-family: inherit;
+                appearance: none;
+                border: 0;
+                border-radius: 5px;
+                background: hsl(221, 67%, 55%);
+                color: #fff;
+                padding: 10px 10px;
+                font-size: 1.1rem;
+                cursor: pointer;
+            }
+
+            .alert_button {
+                min-width: 25%;
+                font-family: inherit;
+                appearance: none;
+                border: 0;
+                border-radius: 5px;
+                background: hsl(0, 67%, 55%);
+                color: #fff;
+                padding: 10px 10px;
+                font-size: 1.1rem;
+                cursor: pointer;
+            }
+
+            .all_select_button {
+                min-width: 20%;
+                font-family: inherit;
+                appearance: none;
+                border: 1px solid hsl(121, 49%, 46%);
+                border-radius: 5px;
+                background: hsl(121, 49%, 46%);
+                color: #ffffff;
+                padding: 10px 10px;
+                font-size: 1.0rem;
+                cursor: pointer;
+            }
+
+            .all_unselect_button {
+                min-width: 20%;
+                font-family: inherit;
+                appearance: none;
+                border: 1px solid #333333;
+                border-radius: 5px;
+                background: #fff;
+                color: #333333;
+                padding: 10px 10px;
+                font-size: 1.0rem;
+                cursor: pointer;
+            }
+
+            .to_default_button {
+                min-width: 20%;
+                font-family: inherit;
+                border: 1px solid #333333;
+                appearance: none;
+                border-radius: 5px;
+                background: #333333;
+                color: #fff;
+                padding: 10px 10px;
+                font-size: 1.0rem;
+                cursor: pointer;
             }
 
             .header {
@@ -115,8 +110,73 @@
 
             .textarea {
                 resize: none;
-                width: 45%;
+                width: 47%;
                 height: 40vh;
+            }
+
+            .normal_button {
+                min-width: 12%;
+                font-family: inherit;
+                appearance: none;
+                border: 0;
+                border-radius: 5px;
+                background: hsl(221, 67%, 55%);
+                color: #fff;
+                padding: 1% 2%;
+                font-size: 1.1rem;
+                cursor: pointer;
+            }
+
+            .alert_button {
+                min-width: 12%;
+                font-family: inherit;
+                appearance: none;
+                border: 0;
+                border-radius: 5px;
+                background: hsl(0, 67%, 55%);
+                color: #fff;
+                padding: 1% 2%;
+                font-size: 1.1rem;
+                cursor: pointer;
+            }
+
+            .all_select_button {
+                min-width: 3%;
+                font-family: inherit;
+                appearance: none;
+                border: 1px solid hsl(121, 49%, 46%);
+                border-radius: 5px;
+                background: hsl(121, 49%, 46%);
+                color: #ffffff;
+                padding: 5px 5px;
+                font-size: 0.9rem;
+                cursor: pointer;
+            }
+
+            .all_unselect_button {
+                min-width: 3%;
+                font-family: inherit;
+                appearance: none;
+                border: 1px solid #333333;
+                border-radius: 5px;
+                background: #fff;
+                color: #333333;
+                padding: 5px 5px;
+                font-size: 0.9rem;
+                cursor: pointer;
+            }
+
+            .to_default_button {
+                min-width: 3%;
+                font-family: inherit;
+                border: 1px solid #333333;
+                appearance: none;
+                border-radius: 5px;
+                background: #333333;
+                color: #fff;
+                padding: 5px 5px;
+                font-size: 0.9rem;
+                cursor: pointer;
             }
 
             .header {
