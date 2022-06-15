@@ -1,3 +1,8 @@
+label,
+input[type='checkbox'] {
+    cursor: pointer;
+}
+
 /* スマホ */
 @media screen and (min-width:0px) and (max-width: 459px) {
     .icon {
@@ -15,7 +20,7 @@
     textarea {
         resize: none;
         width: 99%;
-        height: 30vh;
+        height: calc( 1.3em * 10 );
         font-size: 1.0rem;
     }
 
@@ -108,7 +113,7 @@
     textarea {
         resize: none;
         width: 47%;
-        height: 40vh;
+        height: calc( 1.3em * 15 );
         font-size: 1.0rem;
     }
 

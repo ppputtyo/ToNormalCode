@@ -9,7 +9,6 @@
 
         function init() {
             const prefunc = @json($prev_function);
-            console.log(prefunc);
 
             //前のチェック状態を復元
             for (i = 0; i < 7; i++) {
@@ -58,6 +57,13 @@
                     default_tf[i]; // ON・OFFを切り替え
             }
         }
+
+        function clear_textarea() {
+            let textareas = document.getElementsByTagName("textarea")
+            for (const ta of textareas) {
+                ta.value = "";
+            }
+        }
     </script>
 @endsection
 
@@ -86,26 +92,40 @@
         </p>
         <form method="POST" name="form" action="/to-normal-code">
             @csrf
-            <input type="checkbox" name="function[0]" value="1">
-            数学用英数字記号→普通の英数字 (例: 𝔸→A)
+            <label for="cb0">
+                <input type="checkbox" name="function[0]" value="1" id="cb0">
+                数学用英数字記号→普通の英数字 (例: 𝔸→A)
+            </label>
             <br>
-            <input type="checkbox" name="function[1]" value="1">
-            改行→半角スペース
+            <label for="cb1">
+                <input type="checkbox" name="function[1]" value="1" id="cb1">
+                改行→半角スペース
+                <br>
+            </label>
+            <label for="cb2">
+                <input type="checkbox" name="function[2]" value="1" id="cb2">
+                改行で分割された単語の復元 (例:imple-[改行]ment→implement)
+            </label>
             <br>
-            <input type="checkbox" name="function[2]" value="1">
-            改行で分割された単語の復元 (例:imple-[改行]ment→implement)
+            <label for="cb3">
+                <input type="checkbox" name="function[3]" value="1" id="cb3">
+                2つ以上連続する改行は無視する
+            </label>
             <br>
-            <input type="checkbox" name="function[3]" value="1">
-            2つ以上連続する改行は無視する
+            <label for="cb4">
+                <input type="checkbox" name="function[4]" value="1" id="cb4">
+                文末で改行する
+            </label>
             <br>
-            <input type="checkbox" name="function[4]" value="1">
-            文末で改行する
+            <label for="cb5">
+                <input type="checkbox" name="function[5]" value="1" id="cb5">
+                5000文字を超えた場合に分割してDeepLで翻訳する
+            </label>
             <br>
-            <input type="checkbox" name="function[5]" value="1">
-            5000文字を超えた場合に分割してDeepLで翻訳する
-            <br>
-            <input type="checkbox" name="function[6]" value="1">
-            DeepLで翻訳時に新規タブを開くことを確認しない<font color="#ff4500">(※翻訳後にリロードを行うと確認無しでタブが開きます)</font>
+            <label for="cb6">
+                <input type="checkbox" name="function[6]" value="1" id="cb6">
+                DeepLで翻訳時に新規タブを開くことを確認しない<font color="#ff4500">(※翻訳後にリロードを行うと確認無しでタブが開きます)</font>
+            </label>
             <br>
             <textarea name="target" placeholder="変換前" maxlength="300000">{{ $text }}</textarea>
             <textarea name="result" placeholder="変換後" readonly>{{ $result }}</textarea>
@@ -113,7 +133,7 @@
             <p>
                 <input type="submit" name="change" value="変換" class="normal_button">
                 <input type="submit" name="translate" value="DeepLで翻訳" class="normal_button">
-                <input type="submit" name="reset" value="リセット" class="alert_button">
+                <input type="button" value="リセット" onclick="clear_textarea();" class="alert_button">
             </p>
         </form>
         <br>
@@ -121,7 +141,5 @@
         <br>
         副産物として普通の英数字を数学用英数字記号に変換するツールもできました。<br>
         <a href="/to-special-code">英数字→数学用英数字記号変換ツール</a>
-
-
     </div>
 @endsection

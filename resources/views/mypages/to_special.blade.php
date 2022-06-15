@@ -4,6 +4,15 @@
 @endsection
 
 @section('javascript-head')
+    <script>
+        function clear_textarea() {
+            let textareas = document.getElementsByTagName("textarea")
+            console.log(textareas);
+            for (const ta of textareas) {
+                ta.value = "";
+            }
+        }
+    </script>
 @endsection
 
 @section('title')
@@ -45,7 +54,7 @@
             <textarea name="result" placeholder="変換後" readonly>{{ $result }}</textarea>
             <br>
             <input type="submit" name="change" value="変換" class="normal_button">
-            <br>
+            <input type="button" value="リセット" onclick="clear_textarea();" class="alert_button">
         </form>
 
         <br>
