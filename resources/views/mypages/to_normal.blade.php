@@ -1,211 +1,30 @@
 @extends('layouts.parent')
 
 @section('css')
-    <style>
-        /* スマホ */
-        @media screen and (min-width:0px) and (max-width: 459px) {
-            .icon {
-                width: 80%;
-            }
-
-            .main {
-                margin-left: 5%;
-                margin-right: 5%;
-                text-align: left;
-                background-color: #ffffff;
-                height: 100%;
-            }
-
-            .textarea {
-                resize: none;
-                width: 99%;
-                height: 30vh;
-            }
-
-            .normal_button {
-                min-width: 20%;
-                font-family: inherit;
-                appearance: none;
-                border: 0;
-                border-radius: 5px;
-                background: hsl(221, 67%, 55%);
-                color: #fff;
-                padding: 10px 10px;
-                font-size: 1.1rem;
-                cursor: pointer;
-            }
-
-            .alert_button {
-                min-width: 25%;
-                font-family: inherit;
-                appearance: none;
-                border: 0;
-                border-radius: 5px;
-                background: hsl(0, 67%, 55%);
-                color: #fff;
-                padding: 10px 10px;
-                font-size: 1.1rem;
-                cursor: pointer;
-            }
-
-            .all_select_button {
-                min-width: 20%;
-                font-family: inherit;
-                appearance: none;
-                border: 1px solid hsl(121, 49%, 46%);
-                border-radius: 5px;
-                background: hsl(121, 49%, 46%);
-                color: #ffffff;
-                padding: 10px 10px;
-                font-size: 1.0rem;
-                cursor: pointer;
-            }
-
-            .all_unselect_button {
-                min-width: 20%;
-                font-family: inherit;
-                appearance: none;
-                border: 1px solid #333333;
-                border-radius: 5px;
-                background: #fff;
-                color: #333333;
-                padding: 10px 10px;
-                font-size: 1.0rem;
-                cursor: pointer;
-            }
-
-            .to_default_button {
-                min-width: 20%;
-                font-family: inherit;
-                border: 1px solid #333333;
-                appearance: none;
-                border-radius: 5px;
-                background: #333333;
-                color: #fff;
-                padding: 10px 10px;
-                font-size: 1.0rem;
-                cursor: pointer;
-            }
-
-            .header {
-                position: relative;
-                padding: 2% 2%;
-            }
-        }
-
-        /* PC */
-        @media screen and (min-width:460px) {
-            .icon {
-                height: 40px;
-                margin-left: 5px;
-            }
-
-            .main {
-                margin-left: 15%;
-                margin-right: 15%;
-                text-align: left;
-                background-color: #ffffff;
-                height: 100%;
-            }
-
-            .textarea {
-                resize: none;
-                width: 47%;
-                height: 40vh;
-            }
-
-            .normal_button {
-                min-width: 12%;
-                font-family: inherit;
-                appearance: none;
-                border: 0;
-                border-radius: 5px;
-                background: hsl(221, 67%, 55%);
-                color: #fff;
-                padding: 1% 2%;
-                font-size: 1.1rem;
-                cursor: pointer;
-            }
-
-            .alert_button {
-                min-width: 12%;
-                font-family: inherit;
-                appearance: none;
-                border: 0;
-                border-radius: 5px;
-                background: hsl(0, 67%, 55%);
-                color: #fff;
-                padding: 1% 2%;
-                font-size: 1.1rem;
-                cursor: pointer;
-            }
-
-            .all_select_button {
-                min-width: 3%;
-                font-family: inherit;
-                appearance: none;
-                border: 1px solid hsl(121, 49%, 46%);
-                border-radius: 5px;
-                background: hsl(121, 49%, 46%);
-                color: #ffffff;
-                padding: 5px 5px;
-                font-size: 0.9rem;
-                cursor: pointer;
-            }
-
-            .all_unselect_button {
-                min-width: 3%;
-                font-family: inherit;
-                appearance: none;
-                border: 1px solid #333333;
-                border-radius: 5px;
-                background: #fff;
-                color: #333333;
-                padding: 5px 5px;
-                font-size: 0.9rem;
-                cursor: pointer;
-            }
-
-            .to_default_button {
-                min-width: 3%;
-                font-family: inherit;
-                border: 1px solid #333333;
-                appearance: none;
-                border-radius: 5px;
-                background: #333333;
-                color: #fff;
-                padding: 5px 5px;
-                font-size: 0.9rem;
-                cursor: pointer;
-            }
-
-            .header {
-                position: relative;
-                padding: 5px 5px;
-            }
-        }
-    </style>
 @endsection
 
 @section('javascript-head')
     <script>
-        function allcheck(tf) {
-            for (i = 1; i <= 7; i++) {
-                document.form.elements[i].checked = tf; // ON・OFFを切り替え
+        window.addEventListener("load", init);
+
+        function init() {
+            const prefunc = @json($prev_function);
+            console.log(prefunc);
+
+            //前のチェック状態を復元
+            for (i = 0; i < 7; i++) {
+                if (prefunc[i] == 1) {
+                    document.form.elements[i + 1].checked = true;
+                }
             }
-        }
 
-        window.addEventListener("load", execFunction);
-
-        function execFunction() {
-            var urls = @json($url);
+            const urls = @json($url);
             if (urls.length == 0) {
                 return;
             }
-            const prefunc = @json($prev_function);
 
             let message = urls.length + "個のDeepLタブを表示します。";
-            if (prefunc['6'] == 1) {
+            if (prefunc[6] == 1) {
                 for (const url of urls) {
                     window.open(url);
                 }
@@ -216,7 +35,15 @@
             }
         }
 
+        function allcheck(tf) {
+            // 0: csrf
+            for (i = 1; i <= 7; i++) {
+                document.form.elements[i].checked = tf; // ON・OFFを切り替え
+            }
+        }
+
         function defaultcheck() {
+            // 0: csrf
             default_tf = {
                 1: true,
                 2: true,
@@ -259,32 +86,30 @@
         </p>
         <form method="POST" name="form" action="/to-normal-code">
             @csrf
-            <input type="checkbox" name="function[0]" value="1" @if (is_array($prev_function) and array_key_exists('0', $prev_function) and $prev_function['0'] == 1) checked="" @endif>
+            <input type="checkbox" name="function[0]" value="1">
             数学用英数字記号→普通の英数字 (例: 𝔸→A)
             <br>
-            <input type="checkbox" name="function[1]" value="1" @if (is_array($prev_function) and array_key_exists('1', $prev_function) and $prev_function['1'] == 1) checked="" @endif>
+            <input type="checkbox" name="function[1]" value="1">
             改行→半角スペース
             <br>
-            <input type="checkbox" name="function[2]" value="1" @if (is_array($prev_function) and array_key_exists('2', $prev_function) and $prev_function['2'] == 1) checked="" @endif>
+            <input type="checkbox" name="function[2]" value="1">
             改行で分割された単語の復元 (例:imple-[改行]ment→implement)
             <br>
-            <input type="checkbox" name="function[3]" value="1" @if (is_array($prev_function) and array_key_exists('3', $prev_function) and $prev_function['3'] == 1) checked="" @endif>
+            <input type="checkbox" name="function[3]" value="1">
             2つ以上連続する改行は無視する
             <br>
-            <input type="checkbox" name="function[4]" value="1" @if (is_array($prev_function) and array_key_exists('4', $prev_function) and $prev_function['4'] == 1) checked="" @endif>
+            <input type="checkbox" name="function[4]" value="1">
             文末で改行する
             <br>
-            <input type="checkbox" name="function[5]" value="1" @if (is_array($prev_function) and array_key_exists('5', $prev_function) and $prev_function['5'] == 1) checked="" @endif>
+            <input type="checkbox" name="function[5]" value="1">
             5000文字を超えた場合に分割してDeepLで翻訳する
             <br>
-            <input type="checkbox" name="function[6]" value="1" @if (is_array($prev_function) and array_key_exists('6', $prev_function) and $prev_function['6'] == 1) checked="" @endif>
+            <input type="checkbox" name="function[6]" value="1">
             DeepLで翻訳時に新規タブを開くことを確認しない<font color="#ff4500">(※翻訳後にリロードを行うと確認無しでタブが開きます)</font>
             <br>
-
-            <textarea name="target" placeholder="変換前" class="textarea" maxlength="300000">{{ $text }}</textarea>
-            <textarea name="result" placeholder="変換後" readonly class="textarea">{{ $result }}</textarea>
+            <textarea name="target" placeholder="変換前" maxlength="300000">{{ $text }}</textarea>
+            <textarea name="result" placeholder="変換後" readonly>{{ $result }}</textarea>
             <br>
-
             <p>
                 <input type="submit" name="change" value="変換" class="normal_button">
                 <input type="submit" name="translate" value="DeepLで翻訳" class="normal_button">

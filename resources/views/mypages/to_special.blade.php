@@ -1,54 +1,6 @@
 @extends('layouts.parent')
 
 @section('css')
-    <style>
-        .normal_button {
-            min-width: 12%;
-            font-family: inherit;
-            appearance: none;
-            border: 0;
-            border-radius: 5px;
-            background: hsl(221, 67%, 55%);
-            color: #fff;
-            padding: 1% 2%;
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
-
-        .alert_button {
-            min-width: 12%;
-            font-family: inherit;
-            appearance: none;
-            border: 0;
-            border-radius: 5px;
-            background: hsl(0, 67%, 55%);
-            color: #fff;
-            padding: 1% 2%;
-            font-size: 1.1rem;
-            cursor: pointer;
-        }
-
-        .main {
-            margin-left: 15%;
-            margin-right: 15%;
-            text-align: left;
-            background-color: #ffffff;
-            height: 100%;
-        }
-
-        .header {
-            position: relative;
-            background-color: #333333;
-            color: #fff;
-            padding: 2px 3%;
-        }
-
-        .textarea {
-            resize: none;
-            width: max(40%, 250px);
-            height: 40vh;
-        }
-    </style>
 @endsection
 
 @section('javascript-head')
@@ -56,15 +8,15 @@
 
 @section('title')
     <title>数学用英数字記号変換ツール</title>
-    <header class="header">
-        <h2>英数字→数学用英数字記号変換ツール</h2>
-    </header>
 @endsection
 
 
 @section('content')
+    <header class="header">
+        <a href="/to-special-code"><img src="/images/logo_to_special.png" class="icon"></a>
+        <hr size="2" color=#646464>
+    </header>
     <div class="main">
-        <br>
         通常の英数字を数学用英数字記号に変換するツールです。<br>
         Hello World → 𝓗𝓮𝓵𝓵𝓸 𝓦𝓸𝓻𝓵𝓭 みたいな変換が簡単にできます。(環境によってはうまく表示されない場合があるかもです。)<br><br>
         <form method="POST" action="/to-special-code">
@@ -89,8 +41,8 @@
                 ['selected' => $code],
             ) }}
             <br>
-            <textarea name="target" rows=30, cols="60" placeholder="変換前" class="textarea">{{ $text }}</textarea>
-            <textarea name="result" rows=30, cols="60" placeholder="変換後" readonly class="textarea">{{ $result }}</textarea>
+            <textarea name="target" placeholder="変換前" maxlength="300000">{{ $text }}</textarea>
+            <textarea name="result" placeholder="変換後" readonly>{{ $result }}</textarea>
             <br>
             <input type="submit" name="change" value="変換" class="normal_button">
             <br>
