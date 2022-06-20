@@ -136,6 +136,11 @@
                 <input type="button" value="リセット" onclick="clear_textarea();" class="alert_button">
             </p>
         </form>
+        <h3>更新情報</h3>
+        <ul>
+            <li><b>2022/06/20</b> 変換されない特殊文字が存在するバグの修正</li>
+            <li><b>2022/06/11</b> 5000文字を超えた場合に分割してDeepLで翻訳する機能の追加</li>
+        </ul>
         <br>
         欲しい機能、バグ報告、質問等あれば<a href="https://github.com/ppputtyo/ToNormalCode">GitHub</a>のissueまでよろしくお願いします。<br>
         <br>
