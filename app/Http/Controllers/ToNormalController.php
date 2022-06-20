@@ -60,6 +60,35 @@ class ToNormalController extends Controller
         '𝟶'
     );
 
+    private $exception = array(
+        'B' => ['ℬ'],
+        'C' => ['ℭ', 'ℂ'],
+        'E' => ['ℰ'],
+        'F' => ['ℱ'],
+        'H' => ['ℋ', 'ℌ', 'ℍ'],
+        'I' => ['ℐ', 'ℑ'],
+        'L' => ['ℒ'],
+        'M' => ['ℳ'],
+        'N' => ['ℕ'],
+        'P' => ['ℙ'],
+        'Q' => ['ℚ'],
+        'R' => ['ℛ', 'ℜ', 'ℝ'],
+        'Z' => ['ℨ', 'ℤ'],
+        'e' => ['ℯ'],
+        'g' => ['ℊ'],
+        'h' => ['ℎ'],
+        'o' => ['ℴ'],
+        'ϴ' => ['𝚹', '𝛳', '𝜭', '𝝧', '𝞡'],
+        '∇' => ['𝛁', '𝛻', '𝜵', '𝝯', '𝞩'],
+        '∂' => ['𝛛', '𝜕', '𝝏', '𝞉', '𝟃'],
+        'ϵ' => ['𝛜', '𝜖', '𝝐', '𝞊', '𝟄'],
+        'ϑ' => ['𝛝', '𝜗', '𝝑', '𝞋', '𝟅'],
+        'ϰ' => ['𝛞', '𝜘', '𝝒', '𝞌', '𝟆'],
+        'ϕ' => ['𝛟', '𝜙', '𝝓', '𝞍', '𝟇'],
+        'ϱ' => ['𝛠', '𝜚', '𝝔', '𝞎', '𝟈'],
+        'ϖ' => ['𝛡', '𝜛', '𝝕', '𝞏', '𝟉']
+    );
+
     // 正規表現に合う文字を削除
     private function delete_chrs(&$target_array, $target_len, &$idx, $re, $count_chr = '')
     {
@@ -274,8 +303,24 @@ class ToNormalController extends Controller
         return mb_chr($target_ord);
     }
 
+    public function check_exception_code($char)
+    {
+        $target_ord = mb_ord($char);
+        foreach ($this->exception as $to => $exception_list) {
+            foreach ($exception_list as $exc) {
+                if ($target_ord == mb_ord($exc)) {
+                    return $to;
+                }
+            }
+        }
+
+        return $char;
+    }
+
     public function to_normal($char)
     {
+        $char = $this->check_exception_code($char);
+
         foreach ($this->type_list_A as $A) {
             $char = $this->check_and_change($char, $A, 'A', 26);
         }
