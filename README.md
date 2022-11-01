@@ -1,6 +1,6 @@
 ## 英字論文フォーマッタ
 
-https://to-normal-code.herokuapp.com/
+https://to-normal-code.onrender.com/
 <br>
 英字論文を DeepL で正しく翻訳されるようにフォーマットするツールです。
 現在機能は以下の通り。
@@ -16,7 +16,7 @@ https://to-normal-code.herokuapp.com/
 
 ## 英数字 → 数学用英数字記号変換ツール
 
-http://to-normal-code.herokuapp.com/to-special-code
+https://to-normal-code.onrender.com/to-special-code
 <br>
 英字論文フォーマッタを作成するときにできた副産物です。<br>
 通常の英数字を数学用英数字記号に変換するツールです。<br>
