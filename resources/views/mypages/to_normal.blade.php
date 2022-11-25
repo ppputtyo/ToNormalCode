@@ -72,7 +72,7 @@
 @endsection
 
 @section('meta')
-    <meta name="google-site-verification" content="q2WA-fehscnQ8J7Xl-2TPgHH-276MnD349Mrcc9exZU" />
+    <meta name="google-site-verification" content="fTXRHHLMbPc_Jomx6uKpCe4pzc7cMqb76otQ2Wwk2Fs" />
 @endsection
 
 @section('content')
