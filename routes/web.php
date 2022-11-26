@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', 'App\Http\Controllers\MainController@main');
 Route::get('/to-normal-code', 'App\Http\Controllers\ToNormalController@to_normal_code');
