@@ -145,7 +145,7 @@
             <li><b>2022/06/11</b> 5000文字を超えた場合に分割してDeepLで翻訳する機能の追加</li>
         </ul>
         <br>
-        欲しい機能、バグ報告、質問等あれば<a href="https://github.com/ppputtyo/ToNormalCode">GitHub</a>のissueまでよろしくお願いします。<br>
+        欲しい機能、バグ報告、質問等あれば<a href="https://github.com/ppputtyo/ToNormalCode/issues">GitHubのissue</a>、または<a href="https://twitter.com/p_kyopro">@p_kyoro(Twitter)</a>までよろしくお願いします。<br>
         <br>
         副産物として普通の英数字を数学用英数字記号に変換するツールもできました。<br>
         <a href="/to-special-code">英数字→数学用英数字記号変換ツール</a>
