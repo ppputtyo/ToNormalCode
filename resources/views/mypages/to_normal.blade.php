@@ -140,12 +140,14 @@
         </form>
         <h3>更新情報</h3>
         <ul>
+            <li><b>2023/10/22</b> <a href="https://ppputtyo.github.io/paper-formatter/">軽量版βを公開</a></li>
             <li><b>2022/11/02</b> Heroku有料化に伴いRender.comへ移行</li>
             <li><b>2022/06/20</b> 変換されない特殊文字が存在するバグの修正</li>
             <li><b>2022/06/11</b> 5000文字を超えた場合に分割してDeepLで翻訳する機能の追加</li>
         </ul>
         <br>
-        欲しい機能、バグ報告、質問等あれば<a href="https://github.com/ppputtyo/ToNormalCode/issues">GitHubのissue</a>、または<a href="https://twitter.com/p_kyopro">@p_kyoro(Twitter)</a>までよろしくお願いします。<br>
+        欲しい機能、バグ報告、質問等あれば<a href="https://github.com/ppputtyo/ToNormalCode/issues">GitHubのissue</a>、または<a
+            href="https://twitter.com/p_kyopro">@p_kyoro(Twitter)</a>までよろしくお願いします。<br>
         <br>
         副産物として普通の英数字を数学用英数字記号に変換するツールもできました。<br>
         <a href="/to-special-code">英数字→数学用英数字記号変換ツール</a>
